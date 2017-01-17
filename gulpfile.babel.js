@@ -20,7 +20,7 @@ gulp.task('js', callback => {
 	return gulp.src('./src/js/*')
         .pipe(plumber())
         .pipe(webpackStream(options))
-        .pipe(gulp.dest('dist/bundles/js'))
+        .pipe(gulp.dest('dist/js'))
         .on('data', () => {
             if (!callback.called) {
                 callback.called = true;

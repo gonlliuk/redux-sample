@@ -1,6 +1,13 @@
-module.exports = {
-	entry: {
-        app: './src/js'
+const webpack = require('webpack-stream').webpack;
+
+const dev = process.env.NODE_ENV !== 'production';
+
+const options = {
+    devtool: dev ? 'eval-source-map' : null,
+    watch: dev,
+    output: {
+        publicPath: '/js/',
+        filename: dev ? '[name].js' : '[chunkhash:12].js'
     },
     module: {
         loaders: [{
@@ -15,11 +22,16 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
-    output: {
-        path: __dirname + '/dist/bundles/',
-        publicPath: '/js/',
-        filename: '[name].bundle.js'
-    },
 
-    watch: true
+    plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env':{
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            }
+        })
+    ]
 }
+
+module.exports = options;
