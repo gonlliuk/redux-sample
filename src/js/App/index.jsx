@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as issuesActions from '../actionCreators/issues'
-import * as buttonsActions from '../actionCreators/buttons'
+import { buttonsActions } from '../actionCreators/buttons'
 
 const actions = Object.assign({}, issuesActions, buttonsActions)
 
@@ -19,11 +19,11 @@ class App extends Component {
 	}
 
 	componentWillMount() {
-		this.props.addButtons(this.buttons)
+		this.props.add(this.buttons)
 	}
 
 	handleLoadClick() {
-		this.props.loadIssues()
+		this.props.loadIssues(['loadIssues'])
 
 	}
 
