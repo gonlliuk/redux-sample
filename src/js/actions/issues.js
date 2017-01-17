@@ -16,3 +16,9 @@ export function loaded(data) {
 			payload: data
 		}
 }
+
+export function error() {
+	return {
+			type: 'ISSUES_LOAD_ERROR'
+		}
+}

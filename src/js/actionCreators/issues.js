@@ -1,17 +1,17 @@
 import { getIssues } from '../api' 
 import * as issuesActions from '../actions/issues'
-import * as buttonActions from '../actions/buttons'
 
 
-export function loadIssues(buttons = []) {  
+export function loadIssues(repo) {  
 	return function(dispatch) {
-		dispatch(buttonActions.disable(buttons))
-		return getIssues().then(
-			data => {
+		return getIssues(repo)
+		.then(data => {
+			if (data.hasOwnProperty('message')) {
+				dispatch(issuesActions.error())
+			} else {
 				dispatch(issuesActions.loaded(data))
-				dispatch(buttonActions.enable(buttons))
 			}
-		)
+		})
 	}
 }
 

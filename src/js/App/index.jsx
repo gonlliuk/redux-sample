@@ -16,6 +16,7 @@ class App extends Component {
 			name: 'clearIssues',
 			disabled: false
 		}]
+		this.state = { repo: '' }
 	}
 
 	componentWillMount() {
@@ -23,7 +24,11 @@ class App extends Component {
 	}
 
 	handleLoadClick() {
-		this.props.loadIssues(['loadIssues', 'clearIssues'])
+		this.props.disable( ['loadIssues', 'clearIssues'] )
+		this.props.loadIssues(this.state.repo)
+			.then(data => {
+				this.props.enable( ['loadIssues', 'clearIssues'] )
+			})
 
 	}
 
@@ -31,14 +36,21 @@ class App extends Component {
 		this.props.clearIssues()
 	}
 
+	handeInputChange(e) {
+		this.setState({ repo: e.target.value })
+	}
+
 	isButtonDisabled(name) {
 		return this.props.buttons.some(button => button.name === name && button.disabled)
 	}
 
 	render() {
-		const disabled = this.props.disabled
 		return <div>
 			<h1>Some issues from git</h1>
+			<div>
+				<span>{ 'https://github.com/' }</span>
+				<input value={this.state.repo} onChange={::this.handeInputChange}/>
+			</div>
 			<button onClick={::this.handleLoadClick} disabled={this.isButtonDisabled('loadIssues')}>Load Issues</button>
 			<button onClick={::this.handleClearClick} disabled={this.isButtonDisabled('clearIssues')}>Clear Issues</button>
 			<ul>{this.props.issues.map(issue => <li key={issue.id}>{ issue.title }</li>)}</ul>
