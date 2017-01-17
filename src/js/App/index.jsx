@@ -23,7 +23,7 @@ class App extends Component {
 	}
 
 	handleLoadClick() {
-		this.props.loadIssues(['loadIssues'])
+		this.props.loadIssues(['loadIssues', 'clearIssues'])
 
 	}
 
