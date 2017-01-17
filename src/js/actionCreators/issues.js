@@ -7,3 +7,9 @@ export function loadIssues() {
 		promise: getIssues()
 	}
 }
+
+export function clearIssues() {  
+	return {
+		type: 'CLEAR_ISSUES'
+	}
+}

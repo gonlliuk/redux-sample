@@ -6,7 +6,8 @@ import * as reducers from './reducers'
 const reducer = combineReducers(reducers)
 
 const store = createStore(reducer, {
-	issues: []
+	issues: [],
+	buttons: []
 }, applyMiddleware.apply(this, [promisesMiddeware, logger()]))
 
 export default store
